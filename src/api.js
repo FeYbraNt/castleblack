@@ -20,4 +20,14 @@ api.get("/objects", function(req, res) {
   res.json(objects);
 });
 
+/* Create all routes for API */
+api.get("/", function(req, res) {
+  res.status(200).send({ message: 'Welcome to Castle Black API' })
+})
+
+// 1. List all players
+api.get("/players", function(req, res) {
+  res.json(players)
+})
+
 module.exports = api;

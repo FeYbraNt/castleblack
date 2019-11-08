@@ -11,7 +11,7 @@ const port = process.env.PORT || 8080;
 app.set("port", port);
 
 async function run() {
-  app.disable("x-powered-by"); // QUESTION: any reason is this line here?
+  app.disable("x-powered-by"); // QUESTION: any reason is this line here?  // ANSWER: Security reasons (avoids confusion on a hostile attack)
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
 
