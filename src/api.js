@@ -1,5 +1,7 @@
 const { Router } = require("express");
 const api = Router();
+const playerRouter = require("./routes/player")
+const objRouter = require("./routes/object")
 
 // Data moved to dummy database file
 const db = require("./data/db")
@@ -19,36 +21,8 @@ api.get("/players", (req, res) => {
   res.json(db.players)
 })
 
-// 2. Create player: adds a new player to data source.
-api.post('/player', (req, res) => {
-  if (!req.body.name) {
-    res.status(502).send('Name is required')
-  } else {
-    const player = { id: db.players.length + 1, name: req.body.name }
-    res.status(200).send('Player ' + player.name + ' added to data source.')
-  }
-})
-
-// 3. Get player by id: returns the player to data source
-api.get('/player/:id', (req, res) => {
-  const id = req.params.id
-
-  if (isFinite(id) && id > 0 ) {
-      const found = db.players.find((player) => (player.id == id))
-      if (found) { res.json(found) }
-      else {
-        res.status(404).send('Player not found.')
-      }
-  } else {
-    res.status(400).send('Parameter "id" is not a valid number.')
-  }
-  
-})
-
-// 4. Arm a player with an object in its bag
-api.patch('/player/:bag', (req, res) => {
-
-})
-
+// Connect routes
+api.use("/player", playerRouter)
+api.use("/object", objRouter)
 
 module.exports = api;
